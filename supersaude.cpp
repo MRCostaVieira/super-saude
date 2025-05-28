@@ -21,6 +21,32 @@ class Classe {
 // Criar objeto conveniado.
 Classe conveniado;
 
+void incluirConveniado() {
+    printf("\nIniciando a inclusão de conveniado...");
+    printf("\nInforme os seguintes dados:\n");
+
+    getchar();
+    printf("Nome completo: ");
+    scanf("%[^\n]", conveniado.nome);
+
+    getchar();
+    printf("CPF válido: ");
+    scanf("%[^\n]", conveniado.cpf);
+
+    getchar();
+    printf("Endereço completo: ");
+    scanf("%[^\n]", conveniado.endereco);
+
+    getchar();
+    printf("Número de dependentes: ");
+    scanf("%d", &conveniado.dependentes);
+
+    conveniado.preenchido = 1;
+
+    printf("\nConveniado cadastrado com sucesso!");
+    printf("\n");
+}
+
 void definirApolice() {
 
     string apolices[3] = {"Bronze", "Prata", "Ouro"};
@@ -62,7 +88,7 @@ int opcoes() {
   scanf("%d", &opcao);
 
   if(opcao == 1) {
-    // incluirConveniado();
+    incluirConveniado();
   } else if (opcao == 2) {
 
     if (conveniado.preenchido == 0) {
@@ -75,7 +101,7 @@ int opcoes() {
     // consultarDados();
   } else if (opcao == 4) {
 
-    printf("\nA mensalidade total é de R$%.f", conveniado.mensalidade());
+    printf("\nA mensalidade total é de R$%.2f", conveniado.mensalidade());
     printf("\n");
 
   } else if (opcao == 5) {
