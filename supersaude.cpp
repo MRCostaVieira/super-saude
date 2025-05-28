@@ -14,7 +14,7 @@ class Classe {
     int dependentes = 0;
     int preenchido = 0;
     double mensalidade() {
-        return this->valorApolice * this->dependentes;
+      return this->valorApolice * this->dependentes;
     }
 };
 
@@ -22,54 +22,70 @@ class Classe {
 Classe conveniado;
 
 void incluirConveniado() {
-    printf("\nIniciando a inclusão de conveniado...");
-    printf("\nInforme os seguintes dados:\n");
+  printf("\nIniciando a inclusão de conveniado...");
+  printf("\nInforme os seguintes dados:\n");
 
-    getchar();
-    printf("Nome completo: ");
-    scanf("%[^\n]", conveniado.nome);
+  getchar();
+  printf("Nome completo: ");
+  scanf("%[^\n]", conveniado.nome);
 
-    getchar();
-    printf("CPF válido: ");
-    scanf("%[^\n]", conveniado.cpf);
+  getchar();
+  printf("CPF válido: ");
+  scanf("%[^\n]", conveniado.cpf);
 
-    getchar();
-    printf("Endereço completo: ");
-    scanf("%[^\n]", conveniado.endereco);
+  getchar();
+  printf("Endereço completo: ");
+  scanf("%[^\n]", conveniado.endereco);
 
-    getchar();
-    printf("Número de dependentes: ");
-    scanf("%d", &conveniado.dependentes);
+  getchar();
+  printf("Número de dependentes: ");
+  scanf("%d", &conveniado.dependentes);
 
-    conveniado.preenchido = 1;
+  conveniado.preenchido = 1;
 
-    printf("\nConveniado cadastrado com sucesso!");
-    printf("\n");
+  printf("\nConveniado cadastrado com sucesso!");
+  printf("\n");
 }
 
 void definirApolice() {
+  string apolices[3] = {"Bronze", "Prata", "Ouro"};
+  double precoApolices[3] = {600.00, 800.00, 950.00};
+  int opcao = 0;
 
-    string apolices[3] = {"Bronze", "Prata", "Ouro"};
-    double precoApolices[3] = {600.00, 800.00, 950.00};
-    int opcao = 0;
+  printf("\nDefinindo apólice...");
+  printf("\nTipo de apólice | Preço por conveniado\n");
 
-    printf("\nDefinindo apólice...");
-    printf("\nTipo de apólice | Preço por conveniado\n\n");
+  // Exibir opções e valores
+  for(int i = 0; i < (sizeof(apolices) / sizeof(apolices[0]) ); i++) {
+    printf("[%d] %s | R$ %.2f\n", i+1, apolices[i].c_str(), precoApolices[i]);
+  }
 
-    // Exibir opções e valores
-    for(int i = 0; i < (sizeof(apolices) / sizeof(apolices[0]) ); i++) {
-       printf("[%d] %s | R$ %.2f\n", i+1, apolices[i].c_str(), precoApolices[i]);
-    }
+  printf("Escolher: ");
+  scanf("%d", &opcao);
 
-    printf("Escolher: ");
-    scanf("%d", &opcao);
+  // Atribuir dados ao objeto conveniado
+  conveniado.nomeApolice = apolices[opcao - 1];
+  conveniado.valorApolice = precoApolices[opcao - 1];
 
-    // Atribuir dados ao objeto conveniado
-    conveniado.nomeApolice = apolices[opcao - 1];
-    conveniado.valorApolice = precoApolices[opcao - 1];
+  printf("\nApólice escolhida com sucesso!");
+  printf("\n");
+}
 
-    printf("\nApólice escolhida com sucesso!");
-    printf("\n");
+void consultarDados() {
+  printf("\nProcurando dados do conveniado...\n");
+
+  printf("Nome: %s\n", conveniado.nome);
+  printf("CPF: %s\n", conveniado.cpf);
+  printf("Endereço: %s\n", conveniado.endereco);
+
+  if(conveniado.valorApolice == 0) {
+    printf("Apólice: Ainda não cadastrada.\n");
+  } else {
+    printf("Tipo de apólice: %s\n", conveniado.nomeApolice.c_str());
+    printf("Valor unitário da apólice: %.2f\n", conveniado.valorApolice);
+  }
+
+  printf("Número de denpendentes: %d\n", conveniado.dependentes);
 }
 
 
@@ -80,7 +96,7 @@ int opcoes() {
   printf("\nMenu de opções:\n");
   printf("[1] Inclusão do conveniado\n");
   printf("[2] Tipo de apólice\n");
-  printf("[3] Consulta aos dados do convenio\n");
+  printf("[3] Consultar dados do convenio\n");
   printf("[4] Cálculo do valor da mensalidade\n");
   printf("[5] Encerrar programa\n\n");
   printf("Escolher opção:");
@@ -88,7 +104,13 @@ int opcoes() {
   scanf("%d", &opcao);
 
   if(opcao == 1) {
-    incluirConveniado();
+
+    if (conveniado.preenchido == 0) {
+        incluirConveniado();
+    } else {
+      printf("\nConveniado já cadastrado!\n");
+    }
+
   } else if (opcao == 2) {
 
     if (conveniado.preenchido == 0) {
@@ -98,7 +120,13 @@ int opcoes() {
     }
 
   } else if (opcao == 3) {
-    // consultarDados();
+
+    if (conveniado.preenchido == 0) {
+      printf("\nConveniado ainda não cadastrado!\n");
+    } else {
+      consultarDados();
+    }
+
   } else if (opcao == 4) {
 
     printf("\nA mensalidade total é de R$%.2f", conveniado.mensalidade());
@@ -116,8 +144,6 @@ int opcoes() {
 }
 
 int main() {
-    float valorApolice = 0;
-
-    // Abrir menu de opções
-    opcoes();
+  // Abrir menu de opções
+  opcoes();
 }
